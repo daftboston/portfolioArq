@@ -145,7 +145,6 @@ ul:hover + a {
 
 .profile-img{
     width: 100%;  
-
 }
 
 .about{
@@ -223,15 +222,14 @@ span{
 }
 
 .imagesContainer{
-    display: flex;
-    
+    display: flex;    
     justify-content: space-between;    
     gap: 1rem;    
 }
 
 .imageProyect{
-    width: 18rem;
-    height: 15rem;
+    width: 21rem;
+    height: 21rem;
     overflow: hidden;
     border-radius: 10px;
    
@@ -243,8 +241,8 @@ span{
 }
 
 .imageProyect>img {
-    width: 20rem;
-    height: 20rem;
+    width: 22rem;
+    height: 22rem;
     object-fit: cover;
 }
 
