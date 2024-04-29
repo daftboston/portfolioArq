@@ -1,0 +1,271 @@
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: "Oswald", sans-serif;
+   scroll-behavior: smooth;
+}
+
+:root{
+      --main-bg-color:  rgb(22, 15, 41);
+      --main-text: rgb(243, 223, 193);
+      --main-color: rgb(36, 106, 115);
+      --medium-color: rgb(54, 143, 139);
+      --contrast-color:rgb(246, 174, 45);
+}
+
+
+body{
+    background-color: var(--main-bg-color);
+    color: var(--main-text);
+    width: 90vw;
+}
+nav{
+    position: fixed;
+    top: 1rem;
+    right: 10px;
+}
+
+li{
+    padding: 0.3rem;
+}
+
+.nameSpan{
+    width: 80%;
+    font-size: 40px;
+    font-weight: 400;
+    color: rgb(31, 30, 30);
+    font-family: "Lato", sans-serif;
+    animation: pan 15s infinite alternate;   
+}
+
+@keyframes pan {
+    10% {margin-left: 20%;}
+}
+
+
+
+a{
+     text-decoration: none;
+     color: var(--medium-color);
+   
+}
+
+ul {
+    list-style: none;
+}
+
+.link>a:hover{
+    transition: 0.3s;
+    color: var(--contrast-color);    
+}
+
+ul:hover + a {
+    list-style: disc;
+}
+
+
+
+
+
+/*Language*/
+
+.displayOff{
+    color: aqua;
+    display: none;
+}
+
+.switchLanguageContainer{
+    position: fixed;    
+    bottom: 20px;
+    right:10px;
+    display: flex;
+    gap: 0.3rem;
+    font-size: 0.9rem;
+    align-items: center;
+}
+
+.switch {     
+    width:20px;
+    height: 45px;
+    background-color: var(--main-text);
+    border-radius: 2rem;
+    padding: 0.5rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+  } 
+  
+  /* Rounded sliders */
+  .ball {    
+    top: 3px;
+    left: 3px;
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    background-color: var(--main-color);
+    border-radius: 50%;
+    transition: left 0.3s;
+    animation-timing-function:  cubic-bezier(0.4, 0, 1, 1);
+    transition: 0.2s;
+    z-index: 5000;
+  }
+  
+  .ball-move{
+    transition: 0.2s;
+    top: 28px;
+    z-index: 5000;
+  } 
+
+.lang{
+    transform: rotate(-90deg);
+}
+
+.langOn {
+    transform: rotate(-90deg);
+    color: var(--main-color);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.container-img{   
+    overflow: hidden;
+    border-radius: 10%;
+    width: 110px;
+    padding-bottom: 2rem;
+    
+        
+/*asegurar la proporcion de la imagen*/
+   object-fit: cover;  
+}
+
+.profile-img{
+    width: 100%;  
+
+}
+
+.about{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20%;
+    margin-top: 10vh;  
+    margin-bottom: 5rem;      
+    width: 80vw;
+}
+p{    
+    width: 60%;
+}
+
+.color{
+    color: var(--medium-color);
+}
+.contrast{
+    color: var(--contrast-color);
+}
+span{
+    color: var(--contrast-color);
+}
+
+
+.container{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20%;
+    margin-bottom: 1.5rem;
+}
+
+.skills{
+    display: flex;
+    position: relative;
+}
+.skill{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20%;
+    font-size: 3rem; 
+    width: 80vw;
+    height: 4rem;
+    border-bottom: 1px solid rgba(255,255,255,.25);
+    }
+
+.tipes{
+    position: absolute;
+    margin-left: 28%;
+    margin-top: 2.7rem;
+    color: var(--contrast-color);
+}
+
+.architecture{
+    margin-left: 50%;
+}
+
+.proyectos{
+
+    display: flex;
+    flex-direction: column;
+    margin-left: 20%;
+    margin-top: 10rem;      
+    width: 80vw;
+  
+}
+
+.proyect{
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+ 
+    align-items: center;
+    
+}
+
+.imagesContainer{
+    display: flex;
+    
+    justify-content: space-between;    
+    gap: 1rem;    
+}
+
+.imageProyect{
+    width: 18rem;
+    height: 15rem;
+    overflow: hidden;
+    border-radius: 10px;
+   
+
+}
+
+.work{
+    margin-top: 3rem;
+}
+
+.imageProyect>img {
+    width: 20rem;
+    height: 20rem;
+    object-fit: cover;
+}
+
+
+.proyectName{
+    padding-top: 2rem;
+}
+
+h4{
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
+
+h2{
+    color: var(--main-text);   
+}
+/*@media (max-width:800px) {
+    .imagesContainer{
+        flex-direction: column;
+    }
+}*/
+
+
+
