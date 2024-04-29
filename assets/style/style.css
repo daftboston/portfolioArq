@@ -256,6 +256,7 @@ span{
 .contact{
     margin-top: 5rem;
     gap: 2rem;
+    margin-bottom: 8rem;
 }
 
 .contact > h3 {
