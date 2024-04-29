@@ -4,6 +4,7 @@
    box-sizing: border-box;
    font-family: "Oswald", sans-serif;
    scroll-behavior: smooth;
+
 }
 
 :root{
@@ -250,6 +251,15 @@ span{
 
 .proyectName{
     padding-top: 2rem;
+}
+
+.contact{
+    margin-top: 5rem;
+    gap: 2rem;
+}
+
+.contact > h3 {
+    margin-top: 2rem;
 }
 
 h4{
