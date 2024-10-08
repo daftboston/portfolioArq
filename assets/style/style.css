@@ -66,7 +66,16 @@ ul:hover + a {
 }
 
 
+.skill:hover{
+    
+    color: var(--main-color);
+}
 
+.skill:hover + h4{
+   
+    margin-left: 15%;
+    
+}
 
 
 /*Language*/
@@ -133,6 +142,7 @@ ul:hover + a {
 }
 
 .container-img{   
+    margin-left: 2rem;
     overflow: hidden;
     border-radius: 10%;
     width: 110px;
@@ -143,20 +153,20 @@ ul:hover + a {
    object-fit: cover;  
 }
 
-.profile-img{
-    width: 100%;  
-}
+
 
 .about{
     display: flex;
     flex-direction: column;
-    margin-left: 20%;
+    margin-left: 8vw;
     margin-top: 10vh;  
     margin-bottom: 5rem;      
     width: 80vw;
 }
-p{    
-    width: 60%;
+
+.profile-img{
+   
+    width: 100%;  
 }
 
 .color{
@@ -169,22 +179,19 @@ span{
     color: var(--contrast-color);
 }
 
-
-.container{
-    display: flex;
-    flex-direction: column;
-    margin-left: 20%;
-    margin-bottom: 1.5rem;
+.habilidades{
+    margin-left: 8vw;
 }
 
 .skills{
     display: flex;
-    position: relative;
+   
 }
 .skill{
+    transition: 0.3s;
     display: flex;
-    flex-direction: column;
-    margin-left: 20%;
+    align-items:last baseline;
+    margin-left: 2vw;
     font-size: 3rem; 
     width: 80vw;
     height: 4rem;
@@ -193,47 +200,56 @@ span{
 
 .tipes{
     position: absolute;
-    margin-left: 28%;
+    margin-left: 32%;
     margin-top: 2.7rem;
     color: var(--contrast-color);
 }
 
-.architecture{
-    margin-left: 50%;
-}
 
 .proyectos{
 
     display: flex;
     flex-direction: column;
-    margin-left: 20%;
+    margin-left: 8vw;
     margin-top: 10rem;      
     width: 80vw;
   
 }
 
 .proyect{
-    margin-top: 5rem;
+    margin-top: 9rem;
     display: flex;
     flex-direction: column;
  
     align-items: center;
     
 }
+.proyectInfo{
+    background-color: rgb(0, 255, 162);
+    width: 45rem;
+    height: 5rem;
+    margin-top: 1rem;
+    display: flex;
+    gap: 2rem;
+    align-items:last baseline;
+    justify-content: space-around
+      
+}
 
 .imagesContainer{
-    display: flex;    
-    justify-content: space-between;    
+    display: flex;
+    flex-wrap: wrap;  
+   
+   
     gap: 1rem;    
+    justify-content: center;
 }
 
 .imageProyect{
-    width: 21rem;
+    width: 22rem;
     height: 21rem;
     overflow: hidden;
     border-radius: 10px;
-   
-
 }
 
 .work{
@@ -247,9 +263,7 @@ span{
 }
 
 
-.proyectName{
-    padding-top: 2rem;
-}
+
 
 .contact{
     margin-top: 5rem;
@@ -261,7 +275,8 @@ span{
     margin-top: 2rem;
 }
 
-h4{
+h4{ 
+    transition: 0.7s;
     font-size: 0.8rem;
     font-weight: 400;
 }
@@ -270,11 +285,23 @@ h4{
 h2{
     color: var(--main-text);   
 }
+
+
 /*@media (max-width:800px) {
     .imagesContainer{
         flex-direction: column;
     }
 }*/
 
+.d-block{
+    width: 24rem;
+    
 
+}
+
+#carouselExampleIndicators{
+    
+   
+    height: 30rem;
+}
 
