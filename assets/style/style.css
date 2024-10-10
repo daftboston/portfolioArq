@@ -172,9 +172,11 @@ ul:hover + a {
 .color{
     color: var(--medium-color);
 }
+
 .contrast{
     color: var(--contrast-color);
 }
+
 span{
     color: var(--contrast-color);
 }
@@ -184,10 +186,11 @@ span{
 }
 
 .skills{
-    display: flex;
-   
+    display: flex;   
 }
+
 .skill{
+    position: relative;
     transition: 0.3s;
     display: flex;
     align-items:last baseline;
@@ -195,8 +198,15 @@ span{
     font-size: 3rem; 
     width: 80vw;
     height: 4rem;
-    border-bottom: 1px solid rgba(255,255,255,.25);
     }
+
+.skill:after{
+    content: "";
+    position: absolute;
+    height: 2px;
+    background-color:  rgba(255,255,255,.25);
+    width: 80vw;
+}
 
 .tipes{
     position: absolute;
@@ -207,33 +217,71 @@ span{
 
 
 .proyectos{
-
     display: flex;
     flex-direction: column;
     margin-left: 8vw;
     margin-top: 10rem;      
-    width: 80vw;
-  
+    width: 80vw;  
 }
 
 .proyect{
+    position: relative;
+    height: 110vh;
     margin-top: 9rem;
     display: flex;
-    flex-direction: column;
- 
-    align-items: center;
-    
+    flex-direction: column; 
+    align-items: center;        
 }
+
+.proyect:after{
+    position:absolute;
+  
+    z-index: -30;
+    top: 2rem;
+    transition: 0.4s;
+  
+    width: 20vw;
+    height: 50vh;
+    border: 0.5rem solid var(--main-color); 
+    content: "";
+}
+
+/* Elemento Decorativo*/
+.proyect:hover:after{
+    border: 0.3rem solid var(--contrast-color); 
+    height: 55vh;
+    width: 25vw;
+}
+
 .proyectInfo{
-    background-color: rgb(0, 255, 162);
-    width: 45rem;
-    height: 5rem;
+    position: relative;
+    width: 50vw;
+    height: 5rem;   
     margin-top: 1rem;
     display: flex;
     gap: 2rem;
     align-items:last baseline;
     justify-content: space-around
+
+
       
+}
+
+.proyectInfo:after{
+    content: "";
+    height: 1px;
+    top: 3rem;
+    width:   50vw;
+    position: absolute;
+    opacity: 0.3;
+    
+    background-color: var(--main-text) 
+
+}
+
+.proyectInfo:hover:after{
+    height: 2px;
+    color: var(--main-color);
 }
 
 .imagesContainer{
@@ -245,7 +293,20 @@ span{
     justify-content: center;
 }
 
+
+
+.imageProyect:hover {
+    width: 23rem;
+    height: 22rem;
+}
+
+.imageProyect>img:hover  {
+    width: 24rem;
+    height: 23rem;
+}
+
 .imageProyect{
+    transition: 0.4s;
     width: 22rem;
     height: 21rem;
     overflow: hidden;
@@ -257,6 +318,7 @@ span{
 }
 
 .imageProyect>img {
+    transition: 0.3s;
     width: 22rem;
     height: 22rem;
     object-fit: cover;
