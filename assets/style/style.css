@@ -28,6 +28,7 @@ nav{
 }
 
 li{
+   
     padding: 0.3rem;
 }
 
@@ -46,13 +47,15 @@ li{
 
 
 
-a{
+a{   
+    
      text-decoration: none;
      color: var(--medium-color);
    
 }
 
 ul {
+    z-index: 30; 
     list-style: none;
 }
 
@@ -226,11 +229,12 @@ span{
 
 .proyect{
     position: relative;
-    height: 110vh;
-    margin-top: 9rem;
+    
+    margin-top: 5rem;
     display: flex;
     flex-direction: column; 
-    align-items: center;        
+    align-items: center; 
+    margin-bottom: 3rem;       
 }
 
 .proyect:after{
@@ -254,12 +258,13 @@ span{
 }
 
 .proyectInfo{
+    margin-top: 3rem;
     position: relative;
     width: 50vw;
-    height: 5rem;   
+      
     margin-top: 1rem;
     display: flex;
-    gap: 2rem;
+    gap: 1rem;
     align-items:last baseline;
     justify-content: space-around
 
@@ -270,7 +275,7 @@ span{
 .proyectInfo:after{
     content: "";
     height: 1px;
-    top: 3rem;
+    
     width:   50vw;
     position: absolute;
     opacity: 0.3;
