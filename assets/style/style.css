@@ -23,6 +23,7 @@ body{
 }
 nav{
     position: fixed;
+    z-index: 30;
     top: 1rem;
     right: 10px;
 }
@@ -246,6 +247,7 @@ span{
   
     width: 20vw;
     height: 50vh;
+    opacity: 0.7;
     border: 0.5rem solid var(--main-color); 
     content: "";
 }
@@ -333,6 +335,7 @@ span{
 
 
 .contact{
+    margin-left: 3rem;
     margin-top: 5rem;
     gap: 2rem;
     margin-bottom: 8rem;
