@@ -55,8 +55,7 @@ a{
    
 }
 
-ul {
-   
+ul {   
     list-style: none;
 }
 
@@ -70,15 +69,12 @@ ul:hover + a {
 }
 
 
-.skill:hover{
-    
+.skill:hover{    
     color: var(--main-color);
 }
 
-.skill:hover + h4{
-   
-    margin-left: 15%;
-    
+.skill:hover + h4{   
+    margin-left: 15%;    
 }
 
 
@@ -224,6 +220,8 @@ span{
     height: 4rem;
     }
 
+
+
 .skill:after{
     content: "";
     position: absolute;
@@ -234,10 +232,17 @@ span{
 
 .tipes{
     position: absolute;
-    margin-left: 32%;
+    margin-left: 30%;
     margin-top: 2.7rem;
     color: var(--medium-color);
 }
+
+@media only screen and (max-width: 800px) {
+    .architecture {
+        margin-left: 50%;
+    }
+  }
+
 
 
 .proyectos{
