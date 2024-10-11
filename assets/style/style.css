@@ -260,7 +260,7 @@ span{
 .proyectInfo{
     margin-top: 3rem;
     position: relative;
-    width: 50vw;
+    width: 60vw;
       
     margin-top: 1rem;
     display: flex;
@@ -276,7 +276,7 @@ span{
     content: "";
     height: 1px;
     
-    width:   50vw;
+    width:   65vw;
     position: absolute;
     opacity: 0.3;
     
