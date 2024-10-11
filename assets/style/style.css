@@ -11,7 +11,7 @@
       --main-bg-color:  rgb(22, 15, 41);
       --main-text: rgb(243, 223, 193);
       --main-color: rgb(36, 106, 115);
-      --medium-color: rgb(54, 143, 139);
+      --medium-color: rgb(77, 184, 179);
       --contrast-color:rgb(246, 174, 45);
 }
 
@@ -145,6 +145,26 @@ ul:hover + a {
     font-size: 14px;
 }
 
+ .tecnologiesContainer{
+    
+    margin: 4rem auto ;
+    display: flex;
+
+  
+    gap: 2rem;
+    
+ }
+
+ .Icon>img{
+    height: 4rem;
+    border-radius: 10px;
+ }
+
+
+
+
+
+
 .container-img{   
     margin-left: 2rem;
     overflow: hidden;
@@ -216,7 +236,7 @@ span{
     position: absolute;
     margin-left: 32%;
     margin-top: 2.7rem;
-    color: var(--contrast-color);
+    color: var(--medium-color);
 }
 
 
