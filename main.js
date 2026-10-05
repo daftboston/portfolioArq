@@ -177,6 +177,41 @@ function initProjectReveal() {
 
 initProjectReveal()
 
+// Scroll-triggered stagger for technology logos (reuses project IntersectionObserver pattern)
+function initTechLogoReveal() {
+    const icons = document.querySelectorAll('.tecnologiesContainer .Icon')
+    if (!icons.length) return
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) {
+        icons.forEach((icon) => icon.classList.add('is-visible'))
+        return
+    }
+
+    const observer = new IntersectionObserver(
+        (entries, obs) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return
+                const icon = entry.target
+                const index = Number(icon.dataset.techIndex || 0)
+                window.setTimeout(() => {
+                    icon.classList.add('is-visible')
+                }, index * 120)
+                obs.unobserve(icon)
+            })
+        },
+        { threshold: 0.2, rootMargin: '0px 0px -30px 0px' }
+    )
+
+    icons.forEach((icon, index) => {
+        icon.dataset.techIndex = String(index)
+        observer.observe(icon)
+    })
+}
+
+initTechLogoReveal()
+
+
 // Count-up for stats strip when it enters the viewport (once)
 function formatStatValue(value, el) {
     const prefix = el.dataset.prefix || ''
