@@ -115,13 +115,14 @@ ul:hover + a {
 
 .switchLanguageContainer{
     position: fixed;    
-    bottom: 20px;
-    right:10px;
+    bottom: 88px;
+    right: 22px;
     display: flex;
     gap: 0.3rem;
     font-size: 0.9rem;
     align-items: center;
     z-index: 4000;
+    padding: 10px;
 }
 
 .switch {     
@@ -871,8 +872,9 @@ h2{
     }
 
     .switchLanguageContainer {
-        bottom: 12px;
-        right: 8px;
+        bottom: 96px;
+        right: 18px;
+        padding: 12px;
     }
 }
 
@@ -1127,10 +1129,24 @@ h2{
     }
 
     .switchLanguageContainer {
-        bottom: 10px;
-        right: 6px;
-        transform: scale(0.92);
-        transform-origin: bottom right;
+        bottom: 108px;
+        right: 16px;
+        padding: 14px;
+        transform: none;
+    }
+
+    .switch {
+        width: 26px;
+        height: 52px;
+    }
+
+    .ball {
+        width: 16px;
+        height: 16px;
+    }
+
+    .ball-move {
+        top: 32px;
     }
 }
 
