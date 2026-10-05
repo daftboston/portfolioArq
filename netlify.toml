@@ -1,0 +1,39 @@
+# Phase C — language routes for static portfolio
+# Canonical content lives under /es and /en (generated from bilingual sources).
+# Root redirects by Accept-Language; default Spanish. Legacy /projects/* stays bilingual.
+
+[build]
+  publish = "."
+
+# English browsers → /en/
+[[redirects]]
+  from = "/"
+  to = "/en/"
+  status = 302
+  conditions = {Language = ["en"]}
+  force = true
+
+# Default (and Spanish) → /es/
+[[redirects]]
+  from = "/"
+  to = "/es/"
+  status = 302
+  force = true
+
+# Pretty URLs without trailing index.html (optional safety)
+[[redirects]]
+  from = "/es"
+  to = "/es/"
+  status = 301
+
+[[redirects]]
+  from = "/en"
+  to = "/en/"
+  status = 301
+
+# Direct /index.html → Spanish tree (keeps legacy file for local preview / git history)
+[[redirects]]
+  from = "/index.html"
+  to = "/es/"
+  status = 302
+  force = true

@@ -1,85 +1,154 @@
+/**
+ * Portfolio interactions: language toggle (route-based + legacy bilingual),
+ * project scroll-reveal, stats count-up.
+ */
 
-const language = document.querySelector('.language')
-eventListeners()
-
-function eventListeners(params) {
-    language.addEventListener('click',cambiarLenguage ) 
+function getPathLocale() {
+    const parts = window.location.pathname.split('/').filter(Boolean)
+    if (parts[0] === 'es' || parts[0] === 'en') return parts[0]
+    return null
 }
 
-// Leer estado del localstorage
-
-//LENGUAJE
-
-const eng = document.querySelectorAll('.eng')
-const esp = document.querySelectorAll('.esp')
-const balllang = document.querySelector('.ball-lang')
-const engIndicator = document.querySelector('#eng')
-const espIndicator = document.querySelector('#esp')
-
-if (localStorage.getItem('LANGUAGE')) {     
-    balllang.classList.add('ball-move')      
-    espIndicator.classList.remove('langOn')       
-    eng.forEach(element => {            
-            element.classList.add('displayOn')          
-                           })       
-    esp.forEach(element => {
-            element.classList.add('displayOff')                       
-    }) 
-} else { 
-    engIndicator.classList.remove('langOn')  
-balllang.classList.remove('ball-move')    
-eng.forEach(element => {        
-  element.classList.add('displayOff')       
- })     
-esp.forEach(element => {                   
-       element.classList.add('displayOn')
-    }) 
-}
-
-//cambiar  lenguage
-
-function cambiarLenguage(idioma) {    
-
-console.log('click');
-if (localStorage.getItem('LANGUAGE')) {  
-    espIndicator.classList.add('langOn')
-    engIndicator.classList.remove('langOn')      
-    balllang.classList.remove('ball-move')    
-    localStorage.removeItem('LANGUAGE', true)
-    eng.forEach(element => {
-        if (element.classList.contains('displayOn')) {
-            element.classList.add('displayOff')
-            element.classList.remove("displayOn")                
-          }   
-            
-    })    
-    esp.forEach(element => {
-         if (element.classList.contains('displayOff') ) { 
-            element.classList.add('displayOn')            
-            element.classList.remove("displayOff")   
-        }  
-    })   
-} else {
-    engIndicator.classList.add('langOn') 
-    espIndicator.classList.remove('langOn')  
-    balllang.classList.add('ball-move')
-    localStorage.setItem('LANGUAGE', true)
-    eng.forEach(element => {
-        
-      element.classList.add('displayOn')     
-     element.classList.remove('displayOff')  
-                             
-    })
-     
-   esp.forEach(element => {
-                   
-           element.classList.remove('displayOn')
-           element.classList.add('displayOff')
+function counterpartPath(targetLocale) {
+    const parts = window.location.pathname.split('/').filter(Boolean)
+    if (parts[0] === 'es' || parts[0] === 'en') {
+        parts[0] = targetLocale
+        let path = '/' + parts.join('/')
+        if (path.endsWith('/index.html')) {
+            path = path.slice(0, -'index.html'.length)
         }
-         )     
-}                   
-   }
+        return path + window.location.search + window.location.hash
+    }
+    // Legacy bilingual page → jump into locale tree
+    if (parts[0] === 'projects' && parts[1]) {
+        return '/' + targetLocale + '/projects/' + parts[1] + window.location.search + window.location.hash
+    }
+    return '/' + targetLocale + '/' + window.location.search + window.location.hash
+}
 
+function initRouteLanguageToggle() {
+    const locale = getPathLocale()
+    const switches = document.querySelectorAll('.switch.language, .language')
+    if (!switches.length) return
+
+    switches.forEach((el) => {
+        const go = () => {
+            const current = el.getAttribute('data-locale') || locale || 'es'
+            const target = current === 'es' ? 'en' : 'es'
+            const counterpart =
+                el.getAttribute('data-counterpart') || counterpartPath(target)
+            try {
+                if (target === 'en') {
+                    localStorage.setItem('LANGUAGE', 'en')
+                } else {
+                    localStorage.removeItem('LANGUAGE')
+                }
+                localStorage.setItem('portfolio-lang', target)
+            } catch (_) {
+                /* private mode */
+            }
+            window.location.assign(counterpart)
+        }
+
+        el.addEventListener('click', (event) => {
+            event.preventDefault()
+            go()
+        })
+        el.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault()
+                go()
+            }
+        })
+    })
+}
+
+function initLegacyLanguageToggle() {
+    const language = document.querySelector('.language')
+    if (!language) return
+
+    const eng = document.querySelectorAll('.eng')
+    const esp = document.querySelectorAll('.esp')
+    if (!eng.length && !esp.length) return
+
+    const balllang = document.querySelector('.ball-lang')
+    const engIndicator = document.querySelector('#eng')
+    const espIndicator = document.querySelector('#esp')
+
+    const preferEn =
+        localStorage.getItem('portfolio-lang') === 'en' ||
+        localStorage.getItem('LANGUAGE')
+
+    function showEnglish() {
+        if (balllang) balllang.classList.add('ball-move')
+        if (espIndicator) espIndicator.classList.remove('langOn')
+        if (engIndicator) engIndicator.classList.add('langOn')
+        eng.forEach((element) => {
+            element.classList.add('displayOn')
+            element.classList.remove('displayOff')
+        })
+        esp.forEach((element) => {
+            element.classList.add('displayOff')
+            element.classList.remove('displayOn')
+        })
+    }
+
+    function showSpanish() {
+        if (balllang) balllang.classList.remove('ball-move')
+        if (engIndicator) engIndicator.classList.remove('langOn')
+        if (espIndicator) espIndicator.classList.add('langOn')
+        eng.forEach((element) => {
+            element.classList.add('displayOff')
+            element.classList.remove('displayOn')
+        })
+        esp.forEach((element) => {
+            element.classList.add('displayOn')
+            element.classList.remove('displayOff')
+        })
+    }
+
+    if (preferEn) {
+        showEnglish()
+    } else {
+        showSpanish()
+    }
+
+    language.addEventListener('click', () => {
+        if (
+            localStorage.getItem('portfolio-lang') === 'en' ||
+            localStorage.getItem('LANGUAGE')
+        ) {
+            localStorage.removeItem('LANGUAGE')
+            localStorage.setItem('portfolio-lang', 'es')
+            showSpanish()
+        } else {
+            localStorage.setItem('LANGUAGE', 'en')
+            localStorage.setItem('portfolio-lang', 'en')
+            showEnglish()
+        }
+    })
+}
+
+function initLanguage() {
+    if (getPathLocale()) {
+        initRouteLanguageToggle()
+        // Persist preference from URL
+        try {
+            localStorage.setItem('portfolio-lang', getPathLocale())
+            if (getPathLocale() === 'en') {
+                localStorage.setItem('LANGUAGE', 'en')
+            } else {
+                localStorage.removeItem('LANGUAGE')
+            }
+        } catch (_) {
+            /* private mode */
+        }
+    } else {
+        initLegacyLanguageToggle()
+    }
+}
+
+initLanguage()
 
 // Calm scroll-reveal for project blocks (once per element)
 function initProjectReveal() {
