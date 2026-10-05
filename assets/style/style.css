@@ -99,7 +99,18 @@ ul:hover + a {
 
 .displayOff{
     color: aqua;
+    display: none !important;
+}
+
+/* Hero CTAs: only the active language; Spanish default before JS */
+.hero-cta.eng:not(.displayOn) {
     display: none;
+}
+.hero-cta.eng.displayOn {
+    display: inline-block;
+}
+.hero-cta.esp.displayOff {
+    display: none !important;
 }
 
 .switchLanguageContainer{

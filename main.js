@@ -107,3 +107,73 @@ function initProjectReveal() {
 }
 
 initProjectReveal()
+
+// Count-up for stats strip when it enters the viewport (once)
+function formatStatValue(value, el) {
+    const prefix = el.dataset.prefix || ''
+    const separator = el.dataset.separator
+    const rounded = Math.round(value)
+    let formatted = String(rounded)
+    if (separator) {
+        formatted = formatted.replace(/\B(?=(\d{3})+(?!\d))/g, separator)
+    }
+    return prefix + formatted
+}
+
+function animateStatCount(el, durationMs) {
+    const target = Number(el.dataset.target)
+    if (!Number.isFinite(target)) return
+    const start = performance.now()
+
+    function frame(now) {
+        const t = Math.min(1, (now - start) / durationMs)
+        const eased = 1 - Math.pow(1 - t, 3)
+        el.textContent = formatStatValue(target * eased, el)
+        if (t < 1) {
+            requestAnimationFrame(frame)
+        } else {
+            el.textContent = formatStatValue(target, el)
+        }
+    }
+
+    requestAnimationFrame(frame)
+}
+
+function initStatsCountUp() {
+    const stats = document.querySelector('.stats')
+    if (!stats) return
+
+    const values = stats.querySelectorAll('.stat-value[data-target]')
+    if (!values.length) return
+
+    const showFinal = () => {
+        values.forEach((el) => {
+            el.textContent = formatStatValue(Number(el.dataset.target), el)
+        })
+    }
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) {
+        showFinal()
+        return
+    }
+
+    values.forEach((el) => {
+        el.textContent = formatStatValue(0, el)
+    })
+
+    const observer = new IntersectionObserver(
+        (entries, obs) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return
+                values.forEach((el) => animateStatCount(el, 1000))
+                obs.unobserve(entry.target)
+            })
+        },
+        { threshold: 0.35, rootMargin: '0px 0px -20px 0px' }
+    )
+
+    observer.observe(stats)
+}
+
+initStatsCountUp()
