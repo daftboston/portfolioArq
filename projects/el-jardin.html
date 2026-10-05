@@ -187,10 +187,15 @@
         </div>
     </main>
 
-    <!-- Sticky Contact (reuse Phase A) -->
-    <aside class="contact-sticky" id="contact" aria-label="Contacto">
-        <span class="contact-sticky-label esp">Contacto</span>
-        <span class="contact-sticky-label eng">Contact</span>
+    <!-- Sticky Contact: collapsed card (default) + expandable panel -->
+    <aside class="contact-sticky" id="contact" aria-labelledby="contact-sticky-label-es contact-sticky-label-en">
+        <button type="button" class="contact-sticky-toggle" aria-expanded="false" aria-controls="contact-panel" aria-haspopup="dialog">
+            <span class="contact-sticky-label esp" id="contact-sticky-label-es">Contacto</span>
+            <span class="contact-sticky-label eng" id="contact-sticky-label-en">Contact</span>
+            <i class='bx bx-expand-alt contact-sticky-expand' aria-hidden="true"></i>
+            <span class="contact-sr esp">Ver más información de contacto</span>
+            <span class="contact-sr eng">Show more contact information</span>
+        </button>
         <a class="contact-sticky-link" href="https://wa.me/573214527399" target="_blank" rel="noopener noreferrer" title="WhatsApp">
             <i class='bx bxl-whatsapp' aria-hidden="true"></i>
             <span class="contact-sticky-text">+57 321 4527399</span>
@@ -204,6 +209,60 @@
             <span class="contact-sticky-text">dsantoyop@gmail.com</span>
         </a>
     </aside>
+
+    <div class="contact-backdrop" data-contact-close aria-hidden="true"></div>
+    <div class="contact-panel" id="contact-panel" role="dialog" aria-modal="true" aria-labelledby="contact-panel-title-es contact-panel-title-en" tabindex="-1">
+        <div class="contact-panel-head">
+            <div class="contact-panel-heading">
+                <p class="contact-panel-kicker esp">Arquitecto · BIM</p>
+                <p class="contact-panel-kicker eng">Architect · BIM</p>
+                <h2 class="contact-panel-title esp" id="contact-panel-title-es">Contacto</h2>
+                <h2 class="contact-panel-title eng" id="contact-panel-title-en">Contact</h2>
+            </div>
+            <button type="button" class="contact-panel-close" data-contact-close>
+                <i class='bx bx-x' aria-hidden="true"></i>
+                <span class="contact-sr esp">Cerrar</span>
+                <span class="contact-sr eng">Close</span>
+            </button>
+        </div>
+        <p class="contact-panel-lead esp">Hablemos de tu próximo proyecto.</p>
+        <p class="contact-panel-lead eng">Let’s talk about your next project.</p>
+        <ul class="contact-panel-list">
+            <li>
+                <a class="contact-panel-item" href="https://wa.me/573214527399" target="_blank" rel="noopener noreferrer">
+                    <i class='bx bxl-whatsapp' aria-hidden="true"></i>
+                    <span class="contact-panel-meta">
+                        <span class="contact-panel-label">WhatsApp</span>
+                        <span class="contact-panel-value">+57 321 4527399</span>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a class="contact-panel-item" href="https://www.linkedin.com/in/danielsantoyodev" target="_blank" rel="noopener noreferrer">
+                    <i class='bx bxl-linkedin' aria-hidden="true"></i>
+                    <span class="contact-panel-meta">
+                        <span class="contact-panel-label">LinkedIn</span>
+                        <span class="contact-panel-value">in/danielsantoyodev</span>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a class="contact-panel-item" href="mailto:dsantoyop@gmail.com">
+                    <i class='bx bx-envelope' aria-hidden="true"></i>
+                    <span class="contact-panel-meta">
+                        <span class="contact-panel-label esp">Correo</span>
+                        <span class="contact-panel-label eng">Email</span>
+                        <span class="contact-panel-value">dsantoyop@gmail.com</span>
+                    </span>
+                </a>
+            </li>
+        </ul>
+        <div class="contact-panel-foot">
+            <p class="contact-panel-location"><i class='bx bx-map' aria-hidden="true"></i> Bogotá, Colombia</p>
+            <a class="contact-panel-cv esp" href="/Daniel_Santoyo_CV_BIM_ES.pdf" download><i class='bx bx-download' aria-hidden="true"></i> Descargar CV</a>
+            <a class="contact-panel-cv eng" href="/Daniel_Santoyo_BIM_Resume.pdf" download><i class='bx bx-download' aria-hidden="true"></i> Download CV</a>
+        </div>
+    </div>
 
     <div class="switchLanguageContainer">
         <button type="button" class="language lang-toggle" aria-label="Cambiar idioma / Switch language">

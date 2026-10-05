@@ -51,7 +51,7 @@
 </section>
 <main class="case-main">
 <!-- Facts -->
-<section aria-labelledby="facts-heading" class="case-facts">
+<section class="case-facts">
 
 <h2 class="case-section-title contrast" id="facts-heading-en">Project facts</h2>
 <dl class="facts-grid">
@@ -107,7 +107,7 @@
 </dl>
 </section>
 <!-- Narrative sections -->
-<section aria-labelledby="challenge-heading" class="case-narrative">
+<section class="case-narrative">
 <article class="case-block case-block--placeholder">
 
 <h3 class="case-block-title">Challenge <span class="edit-badge">[EDIT]</span></h3>
@@ -128,7 +128,7 @@
 </article>
 </section>
 <!-- Gallery: built photo paired with presentation posters -->
-<section aria-labelledby="gallery-heading" class="case-gallery" id="gallery">
+<section class="case-gallery" id="gallery">
 
 <h2 class="case-section-title contrast">Gallery</h2>
 
@@ -162,10 +162,15 @@
 
 </div>
 </main>
-<!-- Sticky Contact (reuse Phase A) -->
-<aside aria-label="Contacto" class="contact-sticky" id="contact">
+<!-- Sticky Contact: collapsed card (default) + expandable panel -->
+<aside aria-labelledby="contact-sticky-label-en" class="contact-sticky" id="contact">
+<button aria-controls="contact-panel" aria-expanded="false" aria-haspopup="dialog" class="contact-sticky-toggle" type="button">
 
-<span class="contact-sticky-label">Contact</span>
+<span class="contact-sticky-label" id="contact-sticky-label-en">Contact</span>
+<i aria-hidden="true" class="bx bx-expand-alt contact-sticky-expand"></i>
+
+<span class="contact-sr">Show more contact information</span>
+</button>
 <a class="contact-sticky-link" href="https://wa.me/573214527399" rel="noopener noreferrer" target="_blank" title="WhatsApp">
 <i aria-hidden="true" class="bx bxl-whatsapp"></i>
 <span class="contact-sticky-text">+57 321 4527399</span>
@@ -179,6 +184,59 @@
 <span class="contact-sticky-text">dsantoyop@gmail.com</span>
 </a>
 </aside>
+<div aria-hidden="true" class="contact-backdrop" data-contact-close=""></div>
+<div aria-labelledby="contact-panel-title-en" aria-modal="true" class="contact-panel" id="contact-panel" role="dialog" tabindex="-1">
+<div class="contact-panel-head">
+<div class="contact-panel-heading">
+
+<p class="contact-panel-kicker">Architect · BIM</p>
+
+<h2 class="contact-panel-title" id="contact-panel-title-en">Contact</h2>
+</div>
+<button class="contact-panel-close" data-contact-close="" type="button">
+<i aria-hidden="true" class="bx bx-x"></i>
+
+<span class="contact-sr">Close</span>
+</button>
+</div>
+
+<p class="contact-panel-lead">Let’s talk about your next project.</p>
+<ul class="contact-panel-list">
+<li>
+<a class="contact-panel-item" href="https://wa.me/573214527399" rel="noopener noreferrer" target="_blank">
+<i aria-hidden="true" class="bx bxl-whatsapp"></i>
+<span class="contact-panel-meta">
+<span class="contact-panel-label">WhatsApp</span>
+<span class="contact-panel-value">+57 321 4527399</span>
+</span>
+</a>
+</li>
+<li>
+<a class="contact-panel-item" href="https://www.linkedin.com/in/danielsantoyodev" rel="noopener noreferrer" target="_blank">
+<i aria-hidden="true" class="bx bxl-linkedin"></i>
+<span class="contact-panel-meta">
+<span class="contact-panel-label">LinkedIn</span>
+<span class="contact-panel-value">in/danielsantoyodev</span>
+</span>
+</a>
+</li>
+<li>
+<a class="contact-panel-item" href="mailto:dsantoyop@gmail.com">
+<i aria-hidden="true" class="bx bx-envelope"></i>
+<span class="contact-panel-meta">
+
+<span class="contact-panel-label">Email</span>
+<span class="contact-panel-value">dsantoyop@gmail.com</span>
+</span>
+</a>
+</li>
+</ul>
+<div class="contact-panel-foot">
+<p class="contact-panel-location"><i aria-hidden="true" class="bx bx-map"></i> Bogotá, Colombia</p>
+
+<a class="contact-panel-cv" download="" href="/Daniel_Santoyo_BIM_Resume.pdf"><i aria-hidden="true" class="bx bx-download"></i> Download CV</a>
+</div>
+</div>
 <div class="switchLanguageContainer">
 <button aria-label="Cambiar a Español" class="language lang-toggle" data-counterpart="/es/projects/avanti-tower.html" data-locale="en" type="button">
 <span class="lang-toggle__track">

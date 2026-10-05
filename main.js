@@ -1,6 +1,6 @@
 /**
  * Portfolio interactions: language toggle (route-based + legacy bilingual),
- * project scroll-reveal, stats count-up.
+ * project scroll-reveal, tech logo stagger, stats count-up, expandable contact.
  */
 
 function getPathLocale() {
@@ -29,6 +29,8 @@ function counterpartPath(targetLocale) {
 function prefersReducedMotion() {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches
 }
+
+const supportsIO = 'IntersectionObserver' in window
 
 function setToggleVisual(el, locale) {
     const thumb = el.querySelector('.lang-toggle__thumb, .ball-lang, .ball')
@@ -92,6 +94,16 @@ function initRouteLanguageToggle() {
                 event.preventDefault()
                 go()
             }
+        })
+    })
+
+    // Back/forward cache restores the page mid-animation (thumb flipped, busy
+    // flag set) — reset so the toggle reflects this page and works again.
+    window.addEventListener('pageshow', (event) => {
+        if (!event.persisted) return
+        switches.forEach((el) => {
+            delete el.dataset.busy
+            setToggleVisual(el, locale || 'es')
         })
     })
 }
@@ -180,12 +192,13 @@ function initProjectReveal() {
     const projects = document.querySelectorAll('.proyect')
     if (!projects.length) return
 
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) {
+    if (prefersReducedMotion() || !supportsIO) {
         projects.forEach((project) => project.classList.add('is-visible'))
         return
     }
 
+    // threshold 0 + bottom inset: a ratio threshold never fires on cards
+    // taller than ~6 viewports (stacked galleries on phones).
     const observer = new IntersectionObserver(
         (entries, obs) => {
             entries.forEach((entry) => {
@@ -194,7 +207,7 @@ function initProjectReveal() {
                 obs.unobserve(entry.target)
             })
         },
-        { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+        { threshold: 0, rootMargin: '0px 0px -10% 0px' }
     )
 
     projects.forEach((project) => observer.observe(project))
@@ -207,8 +220,7 @@ function initTechLogoReveal() {
     const icons = document.querySelectorAll('.tecnologiesContainer .Icon')
     if (!icons.length) return
 
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) {
+    if (prefersReducedMotion() || !supportsIO) {
         icons.forEach((icon) => icon.classList.add('is-visible'))
         return
     }
@@ -252,6 +264,11 @@ function formatStatValue(value, el) {
 function animateStatCount(el, durationMs) {
     const target = Number(el.dataset.target)
     if (!Number.isFinite(target)) return
+    // Lock the final width first so the strip doesn't reflow every frame
+    el.textContent = formatStatValue(target, el)
+    const finalWidth = el.getBoundingClientRect().width
+    if (finalWidth) el.style.minWidth = `${Math.ceil(finalWidth)}px`
+    el.textContent = formatStatValue(0, el)
     const start = performance.now()
 
     function frame(now) {
@@ -281,8 +298,7 @@ function initStatsCountUp() {
         })
     }
 
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) {
+    if (prefersReducedMotion() || !supportsIO) {
         showFinal()
         return
     }
@@ -295,7 +311,7 @@ function initStatsCountUp() {
         (entries, obs) => {
             entries.forEach((entry) => {
                 if (!entry.isIntersecting) return
-                values.forEach((el) => animateStatCount(el, 1000))
+                values.forEach((el) => animateStatCount(el, 1200))
                 obs.unobserve(entry.target)
             })
         },
@@ -306,3 +322,156 @@ function initStatsCountUp() {
 }
 
 initStatsCountUp()
+
+
+// Reduced motion: stop Bootstrap carousel auto-advance (manual controls still work).
+// Runs before Bootstrap's window-load data-ride init reads data-interval.
+function initCarouselMotion() {
+    if (!prefersReducedMotion()) return
+    document.querySelectorAll('[data-ride="carousel"]').forEach((el) => {
+        el.setAttribute('data-interval', 'false')
+    })
+}
+
+initCarouselMotion()
+
+
+// Expandable sticky Contact: card / nav "Contact" link opens a larger panel.
+function initContactPanel() {
+    const card = document.querySelector('.contact-sticky')
+    const panel = document.getElementById('contact-panel')
+    if (!card || !panel) return
+
+    const toggle = card.querySelector('.contact-sticky-toggle')
+    const backdrop = document.querySelector('.contact-backdrop')
+    const closeBtn = panel.querySelector('.contact-panel-close')
+    const navLinks = Array.from(document.querySelectorAll('a[href="#contact"]'))
+    let returnFocusTo = null
+
+    navLinks.forEach((link) => {
+        link.setAttribute('aria-controls', 'contact-panel')
+        link.setAttribute('aria-expanded', 'false')
+        link.setAttribute('aria-haspopup', 'dialog')
+    })
+
+    const isOpen = () => panel.classList.contains('is-open')
+
+    const focusables = () =>
+        Array.from(
+            panel.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')
+        ).filter((el) => el.getClientRects().length > 0)
+
+    const setExpanded = (value) => {
+        const v = value ? 'true' : 'false'
+        if (toggle) toggle.setAttribute('aria-expanded', v)
+        navLinks.forEach((link) => link.setAttribute('aria-expanded', v))
+    }
+
+    const setHash = (on) => {
+        try {
+            const base = window.location.pathname + window.location.search
+            if (on && window.location.hash !== '#contact') {
+                history.replaceState(history.state, '', base + '#contact')
+            } else if (!on && window.location.hash === '#contact') {
+                history.replaceState(history.state, '', base)
+            }
+        } catch (_) {
+            /* file:// or sandboxed */
+        }
+    }
+
+    function onKeydown(event) {
+        if (event.key === 'Escape') {
+            event.preventDefault()
+            close()
+            return
+        }
+        if (event.key !== 'Tab') return
+        // Light focus trap: cycle within the panel
+        const items = focusables()
+        if (!items.length) return
+        const first = items[0]
+        const last = items[items.length - 1]
+        const active = document.activeElement
+        if (event.shiftKey && (active === first || !panel.contains(active))) {
+            event.preventDefault()
+            last.focus()
+        } else if (!event.shiftKey && (active === last || !panel.contains(active))) {
+            event.preventDefault()
+            first.focus()
+        }
+    }
+
+    function open(trigger) {
+        if (isOpen()) {
+            if (closeBtn) closeBtn.focus({ preventScroll: true })
+            return
+        }
+        const active = document.activeElement
+        returnFocusTo = trigger || (active && active !== document.body ? active : toggle)
+        panel.classList.add('is-open')
+        if (backdrop) backdrop.classList.add('is-open')
+        card.classList.add('is-expanded')
+        setExpanded(true)
+        setHash(true)
+        document.addEventListener('keydown', onKeydown)
+        // visibility flips immediately on .is-open, so focus is allowed now;
+        // retry next frame (initial #contact load can reset focus to body)
+        const focusTarget = closeBtn || panel
+        focusTarget.focus({ preventScroll: true })
+        requestAnimationFrame(() => {
+            if (isOpen() && !panel.contains(document.activeElement)) {
+                focusTarget.focus({ preventScroll: true })
+            }
+        })
+    }
+
+    function close() {
+        if (!isOpen()) return
+        const focusWasInside = panel.contains(document.activeElement)
+        panel.classList.remove('is-open')
+        if (backdrop) backdrop.classList.remove('is-open')
+        card.classList.remove('is-expanded')
+        setExpanded(false)
+        setHash(false)
+        document.removeEventListener('keydown', onKeydown)
+        if (focusWasInside || document.activeElement === document.body) {
+            const target =
+                returnFocusTo && document.contains(returnFocusTo) && returnFocusTo.getClientRects().length
+                    ? returnFocusTo
+                    : toggle
+            if (target) target.focus({ preventScroll: true })
+        }
+        returnFocusTo = null
+    }
+
+    // Card: quick links keep working; anywhere else on the card expands it
+    card.addEventListener('click', (event) => {
+        if (event.target.closest('a')) return
+        open(toggle)
+    })
+
+    // Top nav "Contact / Contacto" → expand (card is fixed, always in view)
+    navLinks.forEach((link) => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault()
+            open(link)
+        })
+    })
+
+    panel.querySelectorAll('[data-contact-close]').forEach((btn) => {
+        btn.addEventListener('click', () => close())
+    })
+    if (backdrop) backdrop.addEventListener('click', () => close())
+
+    // Deep links: /es/#contact or a hash change opens the panel
+    window.addEventListener('hashchange', () => {
+        if (window.location.hash === '#contact') open(null)
+    })
+    if (window.location.hash === '#contact') {
+        if (document.readyState === 'complete') open(null)
+        else window.addEventListener('load', () => open(null), { once: true })
+    }
+}
+
+initContactPanel()

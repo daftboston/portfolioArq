@@ -165,10 +165,15 @@
 <a class="hero-cta" href="../index.html#work">← Volver a proyectos</a>
 </div>
 </main>
-<!-- Sticky Contact (reuse Phase A) -->
-<aside aria-label="Contacto" class="contact-sticky" id="contact">
-<span class="contact-sticky-label">Contacto</span>
+<!-- Sticky Contact: collapsed card (default) + expandable panel -->
+<aside aria-labelledby="contact-sticky-label-es" class="contact-sticky" id="contact">
+<button aria-controls="contact-panel" aria-expanded="false" aria-haspopup="dialog" class="contact-sticky-toggle" type="button">
+<span class="contact-sticky-label" id="contact-sticky-label-es">Contacto</span>
 
+<i aria-hidden="true" class="bx bx-expand-alt contact-sticky-expand"></i>
+<span class="contact-sr">Ver más información de contacto</span>
+
+</button>
 <a class="contact-sticky-link" href="https://wa.me/573214527399" rel="noopener noreferrer" target="_blank" title="WhatsApp">
 <i aria-hidden="true" class="bx bxl-whatsapp"></i>
 <span class="contact-sticky-text">+57 321 4527399</span>
@@ -182,6 +187,59 @@
 <span class="contact-sticky-text">dsantoyop@gmail.com</span>
 </a>
 </aside>
+<div aria-hidden="true" class="contact-backdrop" data-contact-close=""></div>
+<div aria-labelledby="contact-panel-title-es" aria-modal="true" class="contact-panel" id="contact-panel" role="dialog" tabindex="-1">
+<div class="contact-panel-head">
+<div class="contact-panel-heading">
+<p class="contact-panel-kicker">Arquitecto · BIM</p>
+
+<h2 class="contact-panel-title" id="contact-panel-title-es">Contacto</h2>
+
+</div>
+<button class="contact-panel-close" data-contact-close="" type="button">
+<i aria-hidden="true" class="bx bx-x"></i>
+<span class="contact-sr">Cerrar</span>
+
+</button>
+</div>
+<p class="contact-panel-lead">Hablemos de tu próximo proyecto.</p>
+
+<ul class="contact-panel-list">
+<li>
+<a class="contact-panel-item" href="https://wa.me/573214527399" rel="noopener noreferrer" target="_blank">
+<i aria-hidden="true" class="bx bxl-whatsapp"></i>
+<span class="contact-panel-meta">
+<span class="contact-panel-label">WhatsApp</span>
+<span class="contact-panel-value">+57 321 4527399</span>
+</span>
+</a>
+</li>
+<li>
+<a class="contact-panel-item" href="https://www.linkedin.com/in/danielsantoyodev" rel="noopener noreferrer" target="_blank">
+<i aria-hidden="true" class="bx bxl-linkedin"></i>
+<span class="contact-panel-meta">
+<span class="contact-panel-label">LinkedIn</span>
+<span class="contact-panel-value">in/danielsantoyodev</span>
+</span>
+</a>
+</li>
+<li>
+<a class="contact-panel-item" href="mailto:dsantoyop@gmail.com">
+<i aria-hidden="true" class="bx bx-envelope"></i>
+<span class="contact-panel-meta">
+<span class="contact-panel-label">Correo</span>
+
+<span class="contact-panel-value">dsantoyop@gmail.com</span>
+</span>
+</a>
+</li>
+</ul>
+<div class="contact-panel-foot">
+<p class="contact-panel-location"><i aria-hidden="true" class="bx bx-map"></i> Bogotá, Colombia</p>
+<a class="contact-panel-cv" download="" href="/Daniel_Santoyo_CV_BIM_ES.pdf"><i aria-hidden="true" class="bx bx-download"></i> Descargar CV</a>
+
+</div>
+</div>
 <div class="switchLanguageContainer">
 <button aria-label="Switch to English" class="language lang-toggle" data-counterpart="/en/projects/urbanizacion-restrepo.html" data-locale="es" type="button">
 <span class="lang-toggle__track">

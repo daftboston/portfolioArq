@@ -147,6 +147,18 @@ def fix_duplicate_ids(soup: BeautifulSoup) -> None:
             seen.add(eid)
 
 
+def prune_aria_refs(soup: BeautifulSoup) -> None:
+    """Drop id refs that pointed at the other language's (now removed) element."""
+    ids = {el.get("id") for el in soup.find_all(True) if el.get("id")}
+    for attr in ("aria-labelledby", "aria-describedby"):
+        for el in soup.find_all(attrs={attr: True}):
+            kept = [ref for ref in el[attr].split() if ref in ids]
+            if kept:
+                el[attr] = " ".join(kept)
+            else:
+                del el[attr]
+
+
 def set_document_lang(soup: BeautifulSoup, locale: str) -> None:
     html = soup.find("html")
     if html:
@@ -279,6 +291,7 @@ def process_file(src: Path, locale: str, rel_posix: str) -> str:
 
     strip_lang_tree(soup, locale)
     fix_duplicate_ids(soup)
+    prune_aria_refs(soup)
     set_document_lang(soup, locale)
     rewrite_urls(soup, locale, rel_posix)
     wire_language_toggle(soup, locale, rel_posix)
