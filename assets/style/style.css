@@ -26,6 +26,11 @@ nav{
     z-index: 3000;
     top: 1rem;
     right: 10px;
+    padding: 0.6rem 0.85rem;
+    border-radius: 12px;
+    background: rgba(22, 15, 41, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 li{
@@ -118,14 +123,11 @@ ul:hover + a {
     height: 13px;
     background-color: var(--main-color);
     border-radius: 50%;
-    transition: left 0.3s;
-    animation-timing-function:  cubic-bezier(0.4, 0, 1, 1);
-    transition: 0.2s;
+    transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 5000;
   }
   
   .ball-move{
-    transition: 0.2s;
     top: 28px;
     z-index: 5000;
   } 
@@ -260,7 +262,15 @@ span{
     display: flex;
     flex-direction: column; 
     align-items: center; 
-    margin-bottom: 3rem;       
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(1.5rem);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.proyect.is-visible{
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .proyect:after{
@@ -327,23 +337,18 @@ span{
 
 
 
-.imageProyect:hover {
-    width: 23rem;
-    height: 22rem;
-}
-
-.imageProyect>img:hover  {
-    width: 24rem;
-    height: 23rem;
-}
-
 .imageProyect{
     z-index: -10;
-    transition: 0.4s;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
     width: 22rem;
     height: 21rem;
     overflow: hidden;
     border-radius: 10px;
+}
+
+.imageProyect:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.32);
 }
 
 .work{
@@ -351,7 +356,7 @@ span{
 }
 
 .imageProyect>img {
-    transition: 0.3s;
+    transition: transform 0.35s ease;
     width: 22rem;
     height: 22rem;
     object-fit: cover;
@@ -401,3 +406,27 @@ h2{
     height: 30rem;
 }
 
+
+/* Calm motion: respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        scroll-behavior: auto !important;
+    }
+
+    .proyect {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .imageProyect,
+    .imageProyect>img,
+    .ball {
+        transition: none;
+    }
+
+    .imageProyect:hover {
+        transform: none;
+        box-shadow: none;
+    }
+}

@@ -68,7 +68,6 @@ if (localStorage.getItem('LANGUAGE')) {
         
       element.classList.add('displayOn')     
      element.classList.remove('displayOff')  
-            
                              
     })
      
@@ -82,4 +81,29 @@ if (localStorage.getItem('LANGUAGE')) {
    }
 
 
+// Calm scroll-reveal for project blocks (once per element)
+function initProjectReveal() {
+    const projects = document.querySelectorAll('.proyect')
+    if (!projects.length) return
 
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (prefersReduced) {
+        projects.forEach((project) => project.classList.add('is-visible'))
+        return
+    }
+
+    const observer = new IntersectionObserver(
+        (entries, obs) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return
+                entry.target.classList.add('is-visible')
+                obs.unobserve(entry.target)
+            })
+        },
+        { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+    )
+
+    projects.forEach((project) => observer.observe(project))
+}
+
+initProjectReveal()
