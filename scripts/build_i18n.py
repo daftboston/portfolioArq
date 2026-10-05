@@ -179,7 +179,7 @@ def rewrite_urls(soup: BeautifulSoup, locale: str, rel_posix: str) -> None:
 
 
 def wire_language_toggle(soup: BeautifulSoup, locale: str, rel_posix: str) -> None:
-    """Ensure toggle reflects locale and navigates to the counterpart page."""
+    """Ensure frosted toggle reflects locale and navigates to the counterpart page."""
     other = "en" if locale == "es" else "es"
     # Counterpart path: same relative file under other locale
     # From browser: /es/projects/foo.html ↔ /en/projects/foo.html
@@ -195,26 +195,37 @@ def wire_language_toggle(soup: BeautifulSoup, locale: str, rel_posix: str) -> No
         return
 
     # Mark current locale on the switch for CSS/JS
-    switch = container.select_one(".switch.language") or container.select_one(".language")
+    switch = (
+        container.select_one(".lang-toggle")
+        or container.select_one(".switch.language")
+        or container.select_one(".language")
+    )
     if switch:
         switch["data-locale"] = locale
         switch["data-counterpart"] = counterpart
-        switch["role"] = "button"
-        switch["tabindex"] = "0"
-        switch["aria-label"] = "Español" if locale == "es" else "English"
-        # Visual: ball position — EN is ball-move (matches old localStorage LANGUAGE=true)
-        ball = switch.select_one(".ball-lang") or switch.select_one(".ball")
+        if switch.name != "button":
+            switch["role"] = "button"
+            switch["tabindex"] = "0"
+        # Aria: announce the language you will switch TO
+        switch["aria-label"] = (
+            "Switch to English" if locale == "es" else "Cambiar a Español"
+        )
+        # Visual: thumb/ball — EN is ball-move (right side)
+        ball = (
+            switch.select_one(".lang-toggle__thumb")
+            or switch.select_one(".ball-lang")
+            or switch.select_one(".ball")
+        )
         eng_ind = switch.select_one("#eng")
         esp_ind = switch.select_one("#esp")
         if locale == "en":
             if ball:
-                classes = ball.get("class", [])
+                classes = list(ball.get("class", []))
                 if "ball-move" not in classes:
                     classes.append("ball-move")
                 ball["class"] = classes
             if eng_ind:
-                c = [x for x in (eng_ind.get("class") or []) if x != "langOn"]
-                eng_ind["class"] = c
+                eng_ind["class"] = [x for x in (eng_ind.get("class") or []) if x != "langOn"]
             if esp_ind:
                 c = list(esp_ind.get("class") or [])
                 if "langOn" not in c:
@@ -224,8 +235,7 @@ def wire_language_toggle(soup: BeautifulSoup, locale: str, rel_posix: str) -> No
             if ball:
                 ball["class"] = [x for x in (ball.get("class") or []) if x != "ball-move"]
             if esp_ind:
-                c = [x for x in (esp_ind.get("class") or []) if x != "langOn"]
-                esp_ind["class"] = c
+                esp_ind["class"] = [x for x in (esp_ind.get("class") or []) if x != "langOn"]
             if eng_ind:
                 c = list(eng_ind.get("class") or [])
                 if "langOn" not in c:

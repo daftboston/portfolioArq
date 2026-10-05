@@ -26,13 +26,39 @@ function counterpartPath(targetLocale) {
     return '/' + targetLocale + '/' + window.location.search + window.location.hash
 }
 
+function prefersReducedMotion() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}
+
+function setToggleVisual(el, locale) {
+    const thumb = el.querySelector('.lang-toggle__thumb, .ball-lang, .ball')
+    const engInd = el.querySelector('#eng')
+    const espInd = el.querySelector('#esp')
+    el.setAttribute('data-locale', locale)
+    if (locale === 'en') {
+        if (thumb) thumb.classList.add('ball-move')
+        if (engInd) engInd.classList.remove('langOn')
+        if (espInd) espInd.classList.add('langOn')
+        el.setAttribute('aria-label', 'Switch to Español')
+    } else {
+        if (thumb) thumb.classList.remove('ball-move')
+        if (espInd) espInd.classList.remove('langOn')
+        if (engInd) engInd.classList.add('langOn')
+        el.setAttribute('aria-label', 'Switch to English')
+    }
+}
+
 function initRouteLanguageToggle() {
     const locale = getPathLocale()
-    const switches = document.querySelectorAll('.switch.language, .language')
+    const switches = document.querySelectorAll('.lang-toggle, .switch.language, .language')
     if (!switches.length) return
 
     switches.forEach((el) => {
+        // Sync visual with current route locale
+        setToggleVisual(el, el.getAttribute('data-locale') || locale || 'es')
+
         const go = () => {
+            if (el.dataset.busy === '1') return
             const current = el.getAttribute('data-locale') || locale || 'es'
             const target = current === 'es' ? 'en' : 'es'
             const counterpart =
@@ -47,7 +73,14 @@ function initRouteLanguageToggle() {
             } catch (_) {
                 /* private mode */
             }
-            window.location.assign(counterpart)
+
+            // Animate thumb, then navigate (skip delay if reduced motion)
+            el.dataset.busy = '1'
+            setToggleVisual(el, target)
+            const delay = prefersReducedMotion() ? 0 : 320
+            window.setTimeout(() => {
+                window.location.assign(counterpart)
+            }, delay)
         }
 
         el.addEventListener('click', (event) => {
@@ -64,25 +97,19 @@ function initRouteLanguageToggle() {
 }
 
 function initLegacyLanguageToggle() {
-    const language = document.querySelector('.language')
+    const language = document.querySelector('.lang-toggle, .language')
     if (!language) return
 
     const eng = document.querySelectorAll('.eng')
     const esp = document.querySelectorAll('.esp')
     if (!eng.length && !esp.length) return
 
-    const balllang = document.querySelector('.ball-lang')
-    const engIndicator = document.querySelector('#eng')
-    const espIndicator = document.querySelector('#esp')
-
     const preferEn =
         localStorage.getItem('portfolio-lang') === 'en' ||
         localStorage.getItem('LANGUAGE')
 
     function showEnglish() {
-        if (balllang) balllang.classList.add('ball-move')
-        if (espIndicator) espIndicator.classList.remove('langOn')
-        if (engIndicator) engIndicator.classList.add('langOn')
+        setToggleVisual(language, 'en')
         eng.forEach((element) => {
             element.classList.add('displayOn')
             element.classList.remove('displayOff')
@@ -94,9 +121,7 @@ function initLegacyLanguageToggle() {
     }
 
     function showSpanish() {
-        if (balllang) balllang.classList.remove('ball-move')
-        if (engIndicator) engIndicator.classList.remove('langOn')
-        if (espIndicator) espIndicator.classList.add('langOn')
+        setToggleVisual(language, 'es')
         eng.forEach((element) => {
             element.classList.add('displayOff')
             element.classList.remove('displayOn')

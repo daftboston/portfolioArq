@@ -142,11 +142,13 @@
         </div>
 
         <div class="switchLanguageContainer">
-            <label class="switch language">
-                <div class="langOn lang" id="eng">Esp</div>
-                <div class="ball ball-lang "></div>
-                <div class="langOn lang" id="esp">Eng</div>
-            </label>
+            <button type="button" class="language lang-toggle" aria-label="Cambiar idioma / Switch language">
+                <span class="lang-toggle__track">
+                    <span class="lang-toggle__thumb ball ball-lang" aria-hidden="true"></span>
+                    <span class="lang-toggle__option lang langOn" id="eng">Español</span>
+                    <span class="lang-toggle__option lang" id="esp">English</span>
+                </span>
+            </button>
         </div>
     </header>
 
