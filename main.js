@@ -324,18 +324,6 @@ function initStatsCountUp() {
 initStatsCountUp()
 
 
-// Reduced motion: stop Bootstrap carousel auto-advance (manual controls still work).
-// Runs before Bootstrap's window-load data-ride init reads data-interval.
-function initCarouselMotion() {
-    if (!prefersReducedMotion()) return
-    document.querySelectorAll('[data-ride="carousel"]').forEach((el) => {
-        el.setAttribute('data-interval', 'false')
-    })
-}
-
-initCarouselMotion()
-
-
 // Expandable sticky Contact: card / nav "Contact" link opens a larger panel.
 function initContactPanel() {
     const card = document.querySelector('.contact-sticky')

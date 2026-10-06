@@ -502,37 +502,6 @@ h2{
 }
 
 
-.d-block{
-    width: 24rem;
-    max-width: 100%;
-}
-
-#carouselExampleIndicators{
-    
-   
-    height: 30rem;
-    max-width: 100%;
-    width: min(24rem, 100%);
-}
-
-#carouselExampleIndicators .carousel-item img,
-#carouselExampleIndicators .carousel-item picture {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-#carouselExampleIndicators .carousel-item picture {
-    display: block;
-}
-#carouselExampleIndicators .carousel-item picture img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-
-
-
 /* ---------- Phase A: full-bleed hero ---------- */
 .hero {
     position: relative;
@@ -1038,16 +1007,6 @@ h2{
         padding-bottom: 5rem;
     }
 
-    .d-block {
-        width: 100%;
-    }
-
-    #carouselExampleIndicators {
-        height: auto;
-        aspect-ratio: 1 / 1;
-        width: min(22rem, 100%);
-    }
-
     .switchLanguageContainer {
         bottom: 100px;
         right: 20px;
@@ -1301,16 +1260,6 @@ h2{
     .contact > h3 {
         font-size: 1.1rem;
         margin-top: 1.25rem;
-    }
-
-    .d-block {
-        width: 100%;
-    }
-
-    #carouselExampleIndicators {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 1 / 1;
     }
 
     .switchLanguageContainer {
@@ -2215,7 +2164,6 @@ h2{
         animation: none !important;
     }
 
-    .carousel-item,
     .proyect:after,
     .skill,
     h4 {
